@@ -100,19 +100,19 @@ DOWNLOAD_URL="https://github.com/$REPO_OWNER/$REPO_NAME/releases/download/$VERSI
 
 # Download and install the binary
 echo "Downloading $BINARY version $VERSION..."
-sudo curl -L -o "$INSTALL_DIR/$BINARY" "$DOWNLOAD_URL"
+sudo curl -L -o "$INSTALL_DIR/$REPO_NAME" "$DOWNLOAD_URL"
 
 # Set executable permissions
-sudo chmod +x "$INSTALL_DIR/$BINARY"
+sudo chmod +x "$INSTALL_DIR/$REPO_NAME"
 
 echo "$BINARY version $VERSION has been installed to $INSTALL_DIR"
 
 # Create systemd service if on Linux
 if [[ "$OS" == "linux" ]]; then
-  create_systemd_service "$BINARY" "$REPO_NAME"
+  create_systemd_service "$REPO_NAME" "$REPO_NAME"
 fi
 
 # Create launchd service if on macOS
 if [[ "$OS" == "darwin" ]]; then
-  create_launchd_service "$BINARY" "$REPO_NAME"
+  create_launchd_service "$REPO_NAME" "$REPO_NAME"
 fi
