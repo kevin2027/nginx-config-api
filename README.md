@@ -8,10 +8,58 @@ Nginx Config API 是一个用于动态管理 Nginx 配置的服务，可以通�
 - 支持配置热加载
 - 日志记录和切割功能
 
-## 安装与运行
+## 安装
+
+### 下载
+
+根据操作系统选择和下载 release 版本
+
+### 设置权限
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/kevin2027/nginx-config-api/main/install.sh | sudo bash
+chmod +x nginx-conf-api
+```
+
+### 系统服务
+
+#### Ubuntu
+
+```bash
+  sudo tee "/etc/systemd/system/nginx-conf-api.service" > /dev/null <<EOF
+[Unit]
+Description=nginx-conf-api Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/path/to/nginx-conf-api
+
+[Install]
+WantedBy=multi-user.target
+EOF
+```
+
+#### macOS
+
+```bash
+tee "/Library/LaunchDaemons/nginx-conf-api.plist" > /dev/null <<EOF
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>nginx-conf-api</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/path/to/nginx-conf-api</string>
+  </array>
+  <key>RunAtLoad</key>
+  <true/>
+</dict>
+</plist>
+EOF
+
+sudo launchctl bootstrap system "/Library/LaunchDaemons/nginx-conf-api.plist"
 ```
 
 ## API 文档
